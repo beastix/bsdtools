@@ -39,7 +39,6 @@ static char sccsid[] = "@(#)rm.c	8.5 (Berkeley) 4/18/94";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
 
 #include <sys/stat.h>
 #include <sys/param.h>
@@ -57,11 +56,11 @@ __FBSDID("$FreeBSD$");
 #include <string.h>
 #include <sysexits.h>
 #include <unistd.h>
+#include <libutil.h>
 
 static int dflag, eval, fflag, iflag, Pflag, vflag, Wflag, stdin_ok;
 static int rflag, Iflag, xflag;
 static uid_t uid;
-static volatile sig_atomic_t info;
 
 static int	check(const char *, const char *, struct stat *);
 static int	check2(char **);
@@ -156,7 +155,6 @@ main(int argc, char *argv[])
 		checkslash(argv);
 	uid = geteuid();
 
-	(void)signal(SIGINFO, siginfo);
 	if (*argv) {
 		stdin_ok = isatty(STDIN_FILENO);
 
@@ -237,12 +235,12 @@ rm_tree(char **argv)
 				(void)fts_set(fts, p, FTS_SKIP);
 				p->fts_number = SKIPPED;
 			}
-			else if (!uid &&
+			/*else if (!uid &&
 				 (p->fts_statp->st_flags & (UF_APPEND|UF_IMMUTABLE)) &&
 				 !(p->fts_statp->st_flags & (SF_APPEND|SF_IMMUTABLE)) &&
 				 lchflags(p->fts_accpath,
 					 p->fts_statp->st_flags &= ~(UF_APPEND|UF_IMMUTABLE)) < 0)
-				goto err;
+				goto err;*/
 			continue;
 		case FTS_DP:
 			/* Post-order: see if user skipped. */
@@ -256,11 +254,11 @@ rm_tree(char **argv)
 		}
 
 		rval = 0;
-		if (!uid &&
+		/*if (!uid &&
 		    (p->fts_statp->st_flags & (UF_APPEND|UF_IMMUTABLE)) &&
 		    !(p->fts_statp->st_flags & (SF_APPEND|SF_IMMUTABLE)))
 			rval = lchflags(p->fts_accpath,
-				       p->fts_statp->st_flags &= ~(UF_APPEND|UF_IMMUTABLE));
+				       p->fts_statp->st_flags &= ~(UF_APPEND|UF_IMMUTABLE));*/
 		if (rval == 0) {
 			/*
 			 * If we can't read or search the directory, may still be
@@ -275,28 +273,18 @@ rm_tree(char **argv)
 					if (rval == 0 && vflag)
 						(void)printf("%s\n",
 						    p->fts_path);
-					if (rval == 0 && info) {
-						info = 0;
-						(void)printf("%s\n",
-						    p->fts_path);
-					}
 					continue;
 				}
 				break;
 
 			case FTS_W:
-				rval = undelete(p->fts_accpath);
+				/*rval = undelete(p->fts_accpath);
 				if (rval == 0 && (fflag && errno == ENOENT)) {
 					if (vflag)
 						(void)printf("%s\n",
 						    p->fts_path);
-					if (info) {
-						info = 0;
-						(void)printf("%s\n",
-						    p->fts_path);
-					}
 					continue;
-				}
+				}*/
 				break;
 
 			case FTS_NS:
@@ -322,11 +310,6 @@ rm_tree(char **argv)
 					if (rval == 0 && vflag)
 						(void)printf("%s\n",
 						    p->fts_path);
-					if (rval == 0 && info) {
-						info = 0;
-						(void)printf("%s\n",
-						    p->fts_path);
-					}
 					continue;
 				}
 			}
@@ -374,17 +357,17 @@ rm_file(char **argv)
 			eval = 1;
 			continue;
 		}
-		if (!fflag && !S_ISWHT(sb.st_mode) && !check(f, f, &sb))
-			continue;
+//		if (!fflag && !S_ISWHT(sb.st_mode) && !check(f, f, &sb))
+//			continue;
 		rval = 0;
-		if (!uid && !S_ISWHT(sb.st_mode) &&
+		/*if (!uid && !S_ISWHT(sb.st_mode) &&
 		    (sb.st_flags & (UF_APPEND|UF_IMMUTABLE)) &&
 		    !(sb.st_flags & (SF_APPEND|SF_IMMUTABLE)))
-			rval = lchflags(f, sb.st_flags & ~(UF_APPEND|UF_IMMUTABLE));
+			rval = lchflags(f, sb.st_flags & ~(UF_APPEND|UF_IMMUTABLE));*/
 		if (rval == 0) {
-			if (S_ISWHT(sb.st_mode))
+			/*if (S_ISWHT(sb.st_mode))
 				rval = undelete(f);
-			else if (S_ISDIR(sb.st_mode))
+			else*/ if (S_ISDIR(sb.st_mode))
 				rval = rmdir(f);
 			else {
 				if (Pflag)
@@ -399,10 +382,6 @@ rm_file(char **argv)
 		}
 		if (vflag && rval == 0)
 			(void)printf("%s\n", f);
-		if (info && rval == 0) {
-			info = 0;
-			(void)printf("%s\n", f);
-		}
 	}
 }
 
@@ -420,7 +399,7 @@ rm_file(char **argv)
 static int
 rm_overwrite(const char *file, struct stat *sbp)
 {
-	struct stat sb, sb2;
+/*	struct stat sb, sb2;
 	struct statfs fsb;
 	off_t len;
 	int bsize, fd, wlen;
@@ -479,7 +458,7 @@ err:	eval = 1;
 		free(buf);
 	if (fd != -1)
 		close(fd);
-	warn("%s", file);
+	warn("%s", file);*/
 	return (0);
 }
 
@@ -500,14 +479,14 @@ check(const char *path, const char *name, struct stat *sp)
 		 * because their permissions are meaningless.  Check stdin_ok
 		 * first because we may not have stat'ed the file.
 		 */
-		if (!stdin_ok || S_ISLNK(sp->st_mode) ||
+		/*if (!stdin_ok || S_ISLNK(sp->st_mode) ||
 		    (!access(name, W_OK) &&
 		    !(sp->st_flags & (SF_APPEND|SF_IMMUTABLE)) &&
 		    (!(sp->st_flags & (UF_APPEND|UF_IMMUTABLE)) || !uid)))
-			return (1);
+			return (1);*/
 		strmode(sp->st_mode, modep);
-		if ((flagsp = fflagstostr(sp->st_flags)) == NULL)
-			err(1, "fflagstostr");
+		//if ((flagsp = fflagstostr(sp->st_flags)) == NULL)
+		//	err(1, "fflagstostr");
 		if (Pflag)
 			errx(1,
 			    "%s: -P was specified, but file is not writable",
@@ -634,9 +613,3 @@ usage(void)
 	exit(EX_USAGE);
 }
 
-static void
-siginfo(int sig __unused)
-{
-
-	info = 1;
-}
