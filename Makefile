@@ -2,7 +2,7 @@ PWD        != pwd
 BOOTSTRAP  := ${PWD}/../beastix/bootstrap/tools
 CC         := ${BOOTSTRAP}/bin/x86_64-unknown-linux-musl-gcc
 CCFLAGS    :=  -I${PWD}/obj/bsdtools/_install/include/ -I${BOOTSTRAP}/include -nostdinc
-BINTARGETS := obj/bsdtools/cat obj/bsdtools/echo obj/bsdtools/ls obj/bsdtools/sync obj/bsdtools/ln obj/bsdtools/mkdir obj/bsdtools/chmod
+BINTARGETS := obj/bsdtools/cat obj/bsdtools/echo obj/bsdtools/ls obj/bsdtools/sync obj/bsdtools/ln obj/bsdtools/mkdir obj/bsdtools/chmod obj/bsdtools/cp
 
 libutil: lib/bsd_libutil/humanize_number.c lib/bsd_libutil/strmode.c lib/bsd_libutil/user_from_uid.c lib/bsd_libutil/setmode.c lib/bsd_libutil/libutil.h
 
@@ -47,7 +47,12 @@ obj/bsdtools/chmod: bin/chmod/chmod.c libutil
 	${CC} ${CCFLAGS} obj/bsdtools/chmod.build/setmode.o obj/bsdtools/chmod.build/chmod.o -o obj/bsdtools/chmod
 	rm -rf obj/bsdtools/chmod.build
 
-obj/bsdtools/cp:
+obj/bsdtools/cp: bin/cp/cp.c bin/cp/utils.c
+	mkdir obj/bsdtools/cp.build
+	${CC} ${CCFLAGS} -c bin/cp/cp.c    -o obj/bsdtools/cp.build/cp.o
+	${CC} ${CCFLAGS} -c bin/cp/utils.c -o obj/bsdtools/cp.build/utils.o
+	${CC} ${CCFLAGS} obj/bsdtools/cp.build/utils.o obj/bsdtools/cp.build/cp.o -o obj/bsdtools/cp
+	rm -rf obj/bsdtools/cp.build
 
 obj/bsdtools/csh:
 

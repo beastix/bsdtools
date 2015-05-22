@@ -42,7 +42,7 @@ static char sccsid[] = "@(#)cp.c	8.2 (Berkeley) 4/1/94";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+#include <libutil.h>
 
 /*
  * Cp copies source files to target files.
@@ -85,7 +85,6 @@ PATH_T to = { to.p_path, emptystring, "" };
 
 int fflag, iflag, lflag, nflag, pflag, vflag;
 static int Rflag, rflag;
-volatile sig_atomic_t info;
 
 enum op { FILE_TO_FILE, FILE_TO_DIR, DIR_TO_DNE };
 
@@ -176,7 +175,7 @@ main(int argc, char *argv[])
 		fts_options &= ~FTS_PHYSICAL;
 		fts_options |= FTS_LOGICAL | FTS_COMFOLLOW;
 	}
-	(void)signal(SIGINFO, siginfo);
+	//(void)signal(SIGINFO, siginfo);
 
 	/* Save the target base in "to". */
 	target = argv[--argc];
@@ -488,8 +487,8 @@ copy(char *argv[], enum op type, int fts_options)
 }
 
 static void
-siginfo(int sig __unused)
+siginfo(int sig)
 {
 
-	info = 1;
+//	info = 1;
 }
