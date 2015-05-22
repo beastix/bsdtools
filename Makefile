@@ -1,7 +1,9 @@
 PWD       != pwd
 BOOTSTRAP := ${PWD}/../beastix/bootstrap/tools
 CC        := ${BOOTSTRAP}/bin/x86_64-unknown-linux-musl-gcc
-CCFLAGS   := -Wall -v -I${PWD}/obj/bsdtools/_install/include/ -I${BOOTSTRAP}/include -nostdinc
+CCFLAGS   :=  -I${PWD}/obj/bsdtools/_install/include/ -I${BOOTSTRAP}/include -nostdinc
+
+libutil: lib/bsd_libutil/humanize_number.c lib/bsd_libutil/libutil.h
 
 obj/bsdtools/cat: bin/cat/cat.c
 	${CC} ${CCFLAGS} $< -o $@
@@ -9,8 +11,15 @@ obj/bsdtools/cat: bin/cat/cat.c
 obj/bsdtools/echo: bin/echo/echo.c
 	${CC} ${CCFLAGS} $< -o $@
 
-obj/bsdtools/ls: bin/ls/ls.c
-	${CC} ${CCFLAGS} $< -o $@
+obj/bsdtools/ls: bin/ls/util.c bin/ls/ls.c bin/ls/cmp.c  bin/ls/print.c libutil
+	mkdir obj/bsdtools/ls.build
+	${CC} ${CCFLAGS} -c bin/ls/util.c                     -o obj/bsdtools/ls.build/util.o
+	${CC} ${CCFLAGS} -c bin/ls/cmp.c                      -o obj/bsdtools/ls.build/cmp.o
+	${CC} ${CCFLAGS} -c bin/ls/print.c                    -o obj/bsdtools/ls.build/print.o
+	${CC} ${CCFLAGS} -c bin/ls/ls.c                       -o obj/bsdtools/ls.build/ls.o
+	${CC} ${CCFLAGS} -c lib/bsd_libutil/humanize_number.c -o obj/bsdtools/ls.build/humanize_number.o
+	${CC} ${CCFLAGS} obj/bsdtools/ls.build/util.o obj/bsdtools/ls.build/cmp.o obj/bsdtools/ls.build/humanize_number.o obj/bsdtools/ls.build/print.o obj/bsdtools/ls.build/ls.o -o $@
+	rm -rf obj/bsdtools/ls.build
 
 obj/bsdtools/chflags:
 
@@ -84,15 +93,18 @@ obj/bsdtools/uuidgen:
 
 bsdheaders: include/
 	cp -Rv include obj/bsdtools/_install/include
+	cp -Rv lib/bsd_libutil/*.h obj/bsdtools/_install/include/
 
 build-binaries: bsdheaders obj/bsdtools/cat obj/bsdtools/echo obj/bsdtools/ls
 
 build-bsdtools: build-binaries
 
 clean-binaries:
+	rm -rf obj/bsdtools/*.build
 	rm -f obj/bsdtools/cat
 	rm -f obj/bsdtools/echo
 	rm -f obj/bsdtools/ls
+
 
 clean-headers:
 	rm -rf obj/bsdtools/_install/include

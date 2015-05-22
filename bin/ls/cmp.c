@@ -36,7 +36,6 @@ static char sccsid[] = "@(#)cmp.c	8.1 (Berkeley) 5/31/93";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
 
 
 #include <sys/types.h>
@@ -124,17 +123,17 @@ int
 birthcmp(const FTSENT *a, const FTSENT *b)
 {
 
-	if (b->fts_statp->st_birthtim.tv_sec >
-	    a->fts_statp->st_birthtim.tv_sec)
+	if (b->fts_statp->st_ctim.tv_sec >
+	    a->fts_statp->st_ctim.tv_sec)
 		return (1);
-	if (b->fts_statp->st_birthtim.tv_sec <
-	    a->fts_statp->st_birthtim.tv_sec)
+	if (b->fts_statp->st_ctim.tv_sec <
+	    a->fts_statp->st_ctim.tv_sec)
 		return (-1);
-	if (b->fts_statp->st_birthtim.tv_nsec >
-	    a->fts_statp->st_birthtim.tv_nsec)
+	if (b->fts_statp->st_ctim.tv_nsec >
+	    a->fts_statp->st_ctim.tv_nsec)
 		return (1);
-	if (b->fts_statp->st_birthtim.tv_nsec <
-	    a->fts_statp->st_birthtim.tv_nsec)
+	if (b->fts_statp->st_ctim.tv_nsec <
+	    a->fts_statp->st_ctim.tv_nsec)
 		return (-1);
 	if (f_samesort)
 		return (strcoll(b->fts_name, a->fts_name));

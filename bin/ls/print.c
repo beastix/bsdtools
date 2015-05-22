@@ -36,17 +36,14 @@ static char sccsid[] = "@(#)print.c	8.4 (Berkeley) 4/17/94";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/stat.h>
-#include <sys/acl.h>
-
+#include <libutil.h>
 #include <err.h>
 #include <errno.h>
 #include <fts.h>
 #include <langinfo.h>
-#include <libutil.h>
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
@@ -173,8 +170,6 @@ printlong(const DISPLAY *dp)
 			printsize(dp->s_size, sp->st_size);
 		if (f_accesstime)
 			printtime(sp->st_atime);
-		else if (f_birthtime)
-			printtime(sp->st_birthtime);
 		else if (f_statustime)
 			printtime(sp->st_ctime);
 		else
@@ -364,10 +359,8 @@ printtime(time_t ftime)
 	char longstring[80];
 	static time_t now = 0;
 	const char *format;
-	static int d_first = -1;
+	static int d_first = 1;
 
-	if (d_first < 0)
-		d_first = (*nl_langinfo(D_MD_ORDER) == 'd');
 	if (now == 0)
 		now = time(NULL);
 
@@ -621,66 +614,4 @@ printsize(size_t width, off_t bytes)
 static void
 aclmode(char *buf, const FTSENT *p)
 {
-	char name[MAXPATHLEN + 1];
-	int ret, trivial;
-	static dev_t previous_dev = NODEV;
-	static int supports_acls = -1;
-	static int type = ACL_TYPE_ACCESS;
-	acl_t facl;
-
-	/*
-	 * XXX: ACLs are not supported on whiteouts and device files
-	 * residing on UFS.
-	 */
-	if (S_ISCHR(p->fts_statp->st_mode) || S_ISBLK(p->fts_statp->st_mode) ||
-	    S_ISWHT(p->fts_statp->st_mode))
-		return;
-
-	if (previous_dev == p->fts_statp->st_dev && supports_acls == 0)
-		return;
-
-	if (p->fts_level == FTS_ROOTLEVEL)
-		snprintf(name, sizeof(name), "%s", p->fts_name);
-	else
-		snprintf(name, sizeof(name), "%s/%s",
-		    p->fts_parent->fts_accpath, p->fts_name);
-
-	if (previous_dev != p->fts_statp->st_dev) {
-		previous_dev = p->fts_statp->st_dev;
-		supports_acls = 0;
-
-		ret = lpathconf(name, _PC_ACL_NFS4);
-		if (ret > 0) {
-			type = ACL_TYPE_NFS4;
-			supports_acls = 1;
-		} else if (ret < 0 && errno != EINVAL) {
-			warn("%s", name);
-			return;
-		}
-		if (supports_acls == 0) {
-			ret = lpathconf(name, _PC_ACL_EXTENDED);
-			if (ret > 0) {
-				type = ACL_TYPE_ACCESS;
-				supports_acls = 1;
-			} else if (ret < 0 && errno != EINVAL) {
-				warn("%s", name);
-				return;
-			}
-		}
-	}
-	if (supports_acls == 0)
-		return;
-	facl = acl_get_link_np(name, type);
-	if (facl == NULL) {
-		warn("%s", name);
-		return;
-	}
-	if (acl_is_trivial_np(facl, &trivial)) {
-		acl_free(facl);
-		warn("%s", name);
-		return;
-	}
-	if (!trivial)
-		buf[10] = '+';
-	acl_free(facl);
 }

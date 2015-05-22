@@ -42,12 +42,10 @@ static char sccsid[] = "@(#)ls.c	8.5 (Berkeley) 4/2/94";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/stat.h>
 #include <sys/ioctl.h>
-#include <sys/mac.h>
 
 #include <dirent.h>
 #include <err.h>
@@ -733,7 +731,7 @@ display(const FTSENT *p, FTSENT *list, int options)
 					maxuser = ulen;
 				if ((glen = strlen(group)) > maxgroup)
 					maxgroup = glen;
-				if (f_flags) {
+/*				if (f_flags) {
 					flags = fflagstostr(sp->st_flags);
 					if (flags != NULL && *flags == '\0') {
 						free(flags);
@@ -744,10 +742,10 @@ display(const FTSENT *p, FTSENT *list, int options)
 					flen = strlen(flags);
 					if (flen > (size_t)maxflags)
 						maxflags = flen;
-				} else
+				} else */
 					flen = 0;
 				labelstr = NULL;
-				if (f_label) {
+/*				if (f_label) {
 					char name[PATH_MAX + 1];
 					mac_t label;
 					int error;
@@ -798,7 +796,7 @@ label_out:
 					labelstrlen = strlen(labelstr);
 					if (labelstrlen > maxlabelstr)
 						maxlabelstr = labelstrlen;
-				} else
+				} else*/
 					labelstrlen = 0;
 
 				if ((np = malloc(sizeof(NAMES) + labelstrlen +
