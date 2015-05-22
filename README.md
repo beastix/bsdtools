@@ -7,4 +7,6 @@ You can then build the tools by issuing the following command:
 	
 	make build-bsdtools
 
-Currently the tools statically link, they should not be integrated into a release until dynamic linking is implemented
+Currently the tools statically link, they should not be integrated into a release until dynamic linking is implemented.
+
+In terms of licensing, all new code is licensed under GPLv2, please see the main Beastix repository for a copy of the full license details. Individual files may remain under the original BSD license.

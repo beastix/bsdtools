@@ -11,6 +11,12 @@ obj/bsdtools/cat: bin/cat/cat.c
 obj/bsdtools/echo: bin/echo/echo.c
 	${CC} ${CCFLAGS} $< -o $@
 
+obj/bsdtools/sync: bin/sync/sync.c
+	${CC} ${CCFLAGS} $< -o $@
+
+obj/bsdtools/pwd: bin/pwd/pwd.c
+	${CC} ${CCFLAGS} $< -o $@
+
 obj/bsdtools/ls: bin/ls/util.c bin/ls/ls.c bin/ls/cmp.c  bin/ls/print.c libutil
 	mkdir obj/bsdtools/ls.build
 	${CC} ${CCFLAGS} -c bin/ls/util.c                     -o obj/bsdtools/ls.build/util.o
@@ -22,10 +28,6 @@ obj/bsdtools/ls: bin/ls/util.c bin/ls/ls.c bin/ls/cmp.c  bin/ls/print.c libutil
 	${CC} ${CCFLAGS} -c lib/bsd_libutil/user_from_uid.c   -o obj/bsdtools/ls.build/user_from_uid.o
 	${CC} ${CCFLAGS} obj/bsdtools/ls.build/util.o obj/bsdtools/ls.build/cmp.o obj/bsdtools/ls.build/humanize_number.o obj/bsdtools/ls.build/strmode.o obj/bsdtools/ls.build/user_from_uid.o obj/bsdtools/ls.build/print.o obj/bsdtools/ls.build/ls.o -o $@
 	rm -rf obj/bsdtools/ls.build
-
-obj/bsdtools/chflags:
-
-obj/bsdtools/chio:
 
 obj/bsdtools/chmod:
 
@@ -60,9 +62,6 @@ obj/bsdtools/pkill:
 obj/bsdtools/ps:
 
 obj/bsdtools/pwait:
-
-obj/bsdtools/pwd:
-
 obj/bsdtools/realpath:
 
 obj/bsdtools/rm:
@@ -75,8 +74,6 @@ obj/bsdtools/sleep:
 
 obj/bsdtools/stty:
 
-obj/bsdtools/sync:
-
 obj/bsdtools/test:
 
 obj/bsdtools/uuidgen:
@@ -85,7 +82,7 @@ bsdheaders: include/
 	cp -Rv include obj/bsdtools/_install/include
 	cp -Rv lib/bsd_libutil/*.h obj/bsdtools/_install/include/
 
-build-binaries: bsdheaders obj/bsdtools/cat obj/bsdtools/echo obj/bsdtools/ls
+build-binaries: bsdheaders obj/bsdtools/cat obj/bsdtools/echo obj/bsdtools/ls obj/bsdtools/sync
 
 build-bsdtools: build-binaries
 
