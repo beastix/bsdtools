@@ -7,3 +7,4 @@ You can then build the tools by issuing the following command:
 	
 	make build-bsdtools
 
+Currently the tools statically link, they should not be integrated into a release until dynamic linking is implemented
