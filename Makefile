@@ -6,6 +6,12 @@ CCFLAGS   := -Wall -v -I${PWD}/obj/bsdtools/_install/include/ -I${BOOTSTRAP}/inc
 obj/bsdtools/cat: bin/cat/cat.c
 	${CC} ${CCFLAGS} $< -o $@
 
+obj/bsdtools/echo: bin/echo/echo.c
+	${CC} ${CCFLAGS} $< -o $@
+
+obj/bsdtools/ls: bin/ls/ls.c
+	${CC} ${CCFLAGS} $< -o $@
+
 obj/bsdtools/chflags:
 
 obj/bsdtools/chio:
@@ -24,9 +30,6 @@ obj/bsdtools/df:
 
 obj/bsdtools/domainname:
 
-obj/bsdtools/echo: bin/echo/echo.c
-	${CC} ${CCFLAGS} $< -o $@
-
 obj/bsdtools/ed:
 
 obj/bsdtools/expr:
@@ -40,8 +43,6 @@ obj/bsdtools/kenv:
 obj/bsdtools/kill:
 
 obj/bsdtools/ln:
-
-obj/bsdtools/ls:
 
 obj/bsdtools/mkdir:
 
@@ -84,6 +85,17 @@ obj/bsdtools/uuidgen:
 bsdheaders: include/
 	cp -Rv include obj/bsdtools/_install/include
 
-build-binaries: bsdheaders obj/bsdtools/cat
+build-binaries: bsdheaders obj/bsdtools/cat obj/bsdtools/echo obj/bsdtools/ls
 
 build-bsdtools: build-binaries
+
+clean-binaries:
+	rm -f obj/bsdtools/cat
+	rm -f obj/bsdtools/echo
+	rm -f obj/bsdtools/ls
+
+clean-headers:
+	rm -rf obj/bsdtools/_install/include
+
+clean-bsdtools: clean-binaries clean-headers
+	
