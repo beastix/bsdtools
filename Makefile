@@ -3,7 +3,7 @@ BOOTSTRAP := ${PWD}/../beastix/bootstrap/tools
 CC        := ${BOOTSTRAP}/bin/x86_64-unknown-linux-musl-gcc
 CCFLAGS   :=  -I${PWD}/obj/bsdtools/_install/include/ -I${BOOTSTRAP}/include -nostdinc
 
-libutil: lib/bsd_libutil/humanize_number.c lib/bsd_libutil/strmode.c lib/bsd_libutil/user_from_uid.c lib/bsd_libutil/libutil.h
+libutil: lib/bsd_libutil/humanize_number.c lib/bsd_libutil/strmode.c lib/bsd_libutil/user_from_uid.c lib/bsd_libutil/setmode.c lib/bsd_libutil/libutil.h
 
 obj/bsdtools/cat: bin/cat/cat.c
 	${CC} ${CCFLAGS} $< -o $@
@@ -19,6 +19,13 @@ obj/bsdtools/pwd: bin/pwd/pwd.c
 
 obj/bsdtools/ln: bin/ln/ln.c
 	${CC} ${CCFLAGS} $< -o $@
+
+obj/bsdtools/mkdir: libutil bin/mkdir/mkdir.c
+	mkdir obj/bsdtools/mkdir.build
+	${CC} ${CCFLAGS} -c bin/mkdir/mkdir.c         -o obj/bsdtools/mkdir.build/mkdir.o
+	${CC} ${CCFLAGS} -c lib/bsd_libutil/setmode.c -o obj/bsdtools/mkdir.build/setmode.o
+	${CC} ${CCFLAGS} obj/bsdtools/mkdir.build/setmode.o obj/bsdtools/mkdir.build/mkdir.o -o obj/bsdtools/mkdir
+	rm -rf obj/bsdtools/mkdir.build
 
 obj/bsdtools/ls: bin/ls/util.c bin/ls/ls.c bin/ls/cmp.c  bin/ls/print.c libutil
 	mkdir obj/bsdtools/ls.build
@@ -54,8 +61,6 @@ obj/bsdtools/hostname:
 
 obj/bsdtools/kill:
 
-obj/bsdtools/mkdir:
-
 obj/bsdtools/mv:
 
 obj/bsdtools/pkill:
@@ -83,7 +88,7 @@ bsdheaders: include/
 	cp -Rv include obj/bsdtools/_install/include
 	cp -Rv lib/bsd_libutil/*.h obj/bsdtools/_install/include/
 
-build-binaries: bsdheaders obj/bsdtools/cat obj/bsdtools/echo obj/bsdtools/ls obj/bsdtools/sync obj/bsdtools/ln
+build-binaries: bsdheaders obj/bsdtools/cat obj/bsdtools/echo obj/bsdtools/ls obj/bsdtools/sync obj/bsdtools/ln obj/bsdtools/mkdir
 
 build-bsdtools: build-binaries
 

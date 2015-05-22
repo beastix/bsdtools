@@ -223,4 +223,10 @@ int	quota_write_usage(struct quotafile *_qf, struct dqblk *_dqb, int _id);
 const char* user_from_uid(uid_t uid, int nouser);
 const char* group_from_gid(gid_t gid, int nogroup);
 
+#define S_ISTXT S_ISVTX
+
+
+mode_t getmode(const void *set, mode_t mode);
+void*  setmode(const char *mode_str);
+
 #endif /* !_LIBUTIL_H_ */
