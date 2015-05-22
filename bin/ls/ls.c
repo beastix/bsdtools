@@ -65,6 +65,7 @@ static char sccsid[] = "@(#)ls.c	8.5 (Berkeley) 4/2/94";
 #include <signal.h>
 #endif
 
+#include <libutil.h>
 #include "ls.h"
 #include "extern.h"
 
@@ -429,7 +430,7 @@ main(int argc, char *argv[])
 		if (f_kblocks)
 			blocksize = 2;
 		else {
-			(void)getbsize(&notused, &blocksize);
+			blocksize = 1024;
 			blocksize /= 512;
 		}
 	}

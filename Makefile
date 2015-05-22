@@ -3,7 +3,7 @@ BOOTSTRAP := ${PWD}/../beastix/bootstrap/tools
 CC        := ${BOOTSTRAP}/bin/x86_64-unknown-linux-musl-gcc
 CCFLAGS   :=  -I${PWD}/obj/bsdtools/_install/include/ -I${BOOTSTRAP}/include -nostdinc
 
-libutil: lib/bsd_libutil/humanize_number.c lib/bsd_libutil/libutil.h
+libutil: lib/bsd_libutil/humanize_number.c lib/bsd_libutil/strmode.c lib/bsd_libutil/user_from_uid.c lib/bsd_libutil/libutil.h
 
 obj/bsdtools/cat: bin/cat/cat.c
 	${CC} ${CCFLAGS} $< -o $@
@@ -18,7 +18,9 @@ obj/bsdtools/ls: bin/ls/util.c bin/ls/ls.c bin/ls/cmp.c  bin/ls/print.c libutil
 	${CC} ${CCFLAGS} -c bin/ls/print.c                    -o obj/bsdtools/ls.build/print.o
 	${CC} ${CCFLAGS} -c bin/ls/ls.c                       -o obj/bsdtools/ls.build/ls.o
 	${CC} ${CCFLAGS} -c lib/bsd_libutil/humanize_number.c -o obj/bsdtools/ls.build/humanize_number.o
-	${CC} ${CCFLAGS} obj/bsdtools/ls.build/util.o obj/bsdtools/ls.build/cmp.o obj/bsdtools/ls.build/humanize_number.o obj/bsdtools/ls.build/print.o obj/bsdtools/ls.build/ls.o -o $@
+	${CC} ${CCFLAGS} -c lib/bsd_libutil/strmode.c         -o obj/bsdtools/ls.build/strmode.o
+	${CC} ${CCFLAGS} -c lib/bsd_libutil/user_from_uid.c   -o obj/bsdtools/ls.build/user_from_uid.o
+	${CC} ${CCFLAGS} obj/bsdtools/ls.build/util.o obj/bsdtools/ls.build/cmp.o obj/bsdtools/ls.build/humanize_number.o obj/bsdtools/ls.build/strmode.o obj/bsdtools/ls.build/user_from_uid.o obj/bsdtools/ls.build/print.o obj/bsdtools/ls.build/ls.o -o $@
 	rm -rf obj/bsdtools/ls.build
 
 obj/bsdtools/chflags:

@@ -220,4 +220,7 @@ int	quota_write_usage(struct quotafile *_qf, struct dqblk *_dqb, int _id);
 #define	UU_LOCK_TRY_ERR		(-6)
 #define	UU_LOCK_OWNER_ERR	(-7)
 
+const char* user_from_uid(uid_t uid, int nouser);
+const char* group_from_gid(gid_t gid, int nogroup);
+
 #endif /* !_LIBUTIL_H_ */
