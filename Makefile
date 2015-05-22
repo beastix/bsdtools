@@ -1,7 +1,8 @@
-PWD       != pwd
-BOOTSTRAP := ${PWD}/../beastix/bootstrap/tools
-CC        := ${BOOTSTRAP}/bin/x86_64-unknown-linux-musl-gcc
-CCFLAGS   :=  -I${PWD}/obj/bsdtools/_install/include/ -I${BOOTSTRAP}/include -nostdinc
+PWD        != pwd
+BOOTSTRAP  := ${PWD}/../beastix/bootstrap/tools
+CC         := ${BOOTSTRAP}/bin/x86_64-unknown-linux-musl-gcc
+CCFLAGS    :=  -I${PWD}/obj/bsdtools/_install/include/ -I${BOOTSTRAP}/include -nostdinc
+BINTARGETS := obj/bsdtools/cat obj/bsdtools/echo obj/bsdtools/ls obj/bsdtools/sync obj/bsdtools/ln obj/bsdtools/mkdir
 
 libutil: lib/bsd_libutil/humanize_number.c lib/bsd_libutil/strmode.c lib/bsd_libutil/user_from_uid.c lib/bsd_libutil/setmode.c lib/bsd_libutil/libutil.h
 
@@ -88,7 +89,7 @@ bsdheaders: include/
 	cp -Rv include obj/bsdtools/_install/include
 	cp -Rv lib/bsd_libutil/*.h obj/bsdtools/_install/include/
 
-build-binaries: bsdheaders obj/bsdtools/cat obj/bsdtools/echo obj/bsdtools/ls obj/bsdtools/sync obj/bsdtools/ln obj/bsdtools/mkdir
+build-binaries: bsdheaders ${BINTARGETS}
 
 build-bsdtools: build-binaries
 
@@ -98,6 +99,10 @@ clean-binaries:
 	rm -f obj/bsdtools/echo
 	rm -f obj/bsdtools/ls
 
+install-bsdtools: build-bsdtools
+	rm -rf obj/bsdtools/_install/bin
+	mkdir obj/bsdtools/_install/bin
+	cp -v ${BINTARGETS} obj/bsdtools/_install/bin
 
 clean-headers:
 	rm -rf obj/bsdtools/_install/include
