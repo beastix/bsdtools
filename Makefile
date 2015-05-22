@@ -17,6 +17,9 @@ obj/bsdtools/sync: bin/sync/sync.c
 obj/bsdtools/pwd: bin/pwd/pwd.c
 	${CC} ${CCFLAGS} $< -o $@
 
+obj/bsdtools/ln: bin/ln/ln.c
+	${CC} ${CCFLAGS} $< -o $@
+
 obj/bsdtools/ls: bin/ls/util.c bin/ls/ls.c bin/ls/cmp.c  bin/ls/print.c libutil
 	mkdir obj/bsdtools/ls.build
 	${CC} ${CCFLAGS} -c bin/ls/util.c                     -o obj/bsdtools/ls.build/util.o
@@ -51,8 +54,6 @@ obj/bsdtools/hostname:
 
 obj/bsdtools/kill:
 
-obj/bsdtools/ln:
-
 obj/bsdtools/mkdir:
 
 obj/bsdtools/mv:
@@ -82,7 +83,7 @@ bsdheaders: include/
 	cp -Rv include obj/bsdtools/_install/include
 	cp -Rv lib/bsd_libutil/*.h obj/bsdtools/_install/include/
 
-build-binaries: bsdheaders obj/bsdtools/cat obj/bsdtools/echo obj/bsdtools/ls obj/bsdtools/sync
+build-binaries: bsdheaders obj/bsdtools/cat obj/bsdtools/echo obj/bsdtools/ls obj/bsdtools/sync obj/bsdtools/ln
 
 build-bsdtools: build-binaries
 
