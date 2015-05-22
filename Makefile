@@ -1,6 +1,7 @@
-BOOTSTRAP := `pwd`/../beastix/bootstrap/tools
+PWD       != pwd
+BOOTSTRAP := ${PWD}/../beastix/bootstrap/tools
 CC        := ${BOOTSTRAP}/bin/x86_64-unknown-linux-musl-gcc
-CCFLAGS   := -Iobj/bsdtools/_install/include/
+CCFLAGS   := -Wall -v -I${PWD}/obj/bsdtools/_install/include/ -I${BOOTSTRAP}/include -nostdinc
 
 obj/bsdtools/cat: bin/cat/cat.c
 	${CC} ${CCFLAGS} $< -o $@
@@ -23,7 +24,8 @@ obj/bsdtools/df:
 
 obj/bsdtools/domainname:
 
-obj/bsdtools/echo:
+obj/bsdtools/echo: bin/echo/echo.c
+	${CC} ${CCFLAGS} $< -o $@
 
 obj/bsdtools/ed:
 
