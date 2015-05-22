@@ -45,11 +45,7 @@ obj/bsdtools/ed:
 
 obj/bsdtools/expr:
 
-obj/bsdtools/getfacl:
-
 obj/bsdtools/hostname:
-
-obj/bsdtools/kenv:
 
 obj/bsdtools/kill:
 
@@ -59,8 +55,6 @@ obj/bsdtools/mkdir:
 
 obj/bsdtools/mv:
 
-obj/bsdtools/pax:
-
 obj/bsdtools/pkill:
 
 obj/bsdtools/ps:
@@ -69,17 +63,11 @@ obj/bsdtools/pwait:
 
 obj/bsdtools/pwd:
 
-obj/bsdtools/rcp:
-
 obj/bsdtools/realpath:
 
 obj/bsdtools/rm:
 
-obj/bsdtools/rmail:
-
 obj/bsdtools/rmdir:
-
-obj/bsdtools/setfacl:
 
 obj/bsdtools/sh:
 
