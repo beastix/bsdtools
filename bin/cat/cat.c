@@ -44,7 +44,6 @@ static char sccsid[] = "@(#)cat.c	8.2 (Berkeley) 4/27/95";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/stat.h>
@@ -68,7 +67,7 @@ static int bflag, eflag, lflag, nflag, sflag, tflag, vflag;
 static int rval;
 static const char *filename;
 
-static void usage(void) __dead2;
+static void usage(void);
 static void scanfiles(char *argv[], int cooked);
 static void cook_cat(FILE *);
 static void raw_cat(int);
