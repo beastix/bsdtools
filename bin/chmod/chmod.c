@@ -39,7 +39,6 @@ static char sccsid[] = "@(#)chmod.c	8.8 (Berkeley) 4/1/94";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/stat.h>
@@ -53,6 +52,7 @@ __FBSDID("$FreeBSD$");
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <libutil.h>
 
 static void usage(void);
 static int may_have_nfs4acl(const FTSENT *ent, int hflag);
@@ -184,7 +184,7 @@ done:	argv += optind;
 		 * identical to the one computed from an ACL will change
 		 * that ACL.
 		 */
-		if (may_have_nfs4acl(p, hflag) == 0 &&
+/*		if (may_have_nfs4acl(p, hflag) == 0 &&
 		    (newmode & ALLPERMS) == (p->fts_statp->st_mode & ALLPERMS))
 				continue;
 		if (fchmodat(AT_FDCWD, p->fts_accpath, newmode, atflag) == -1
@@ -206,7 +206,7 @@ done:	argv += optind;
 				    newmode, m2);
 			}
 			(void)printf("\n");
-		}
+		}*/
 	}
 	if (errno)
 		err(1, "fts_read");
@@ -224,23 +224,5 @@ usage(void)
 static int
 may_have_nfs4acl(const FTSENT *ent, int hflag)
 {
-	int ret;
-	static dev_t previous_dev = NODEV;
-	static int supports_acls = -1;
-
-	if (previous_dev != ent->fts_statp->st_dev) {
-		previous_dev = ent->fts_statp->st_dev;
-		supports_acls = 0;
-
-		if (hflag)
-			ret = lpathconf(ent->fts_accpath, _PC_ACL_NFS4);
-		else
-			ret = pathconf(ent->fts_accpath, _PC_ACL_NFS4);
-		if (ret > 0)
-			supports_acls = 1;
-		else if (ret < 0 && errno != EINVAL)
-			warn("%s", ent->fts_path);
-	}
-
-	return (supports_acls);
+	return 0;
 }

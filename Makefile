@@ -2,7 +2,7 @@ PWD        != pwd
 BOOTSTRAP  := ${PWD}/../beastix/bootstrap/tools
 CC         := ${BOOTSTRAP}/bin/x86_64-unknown-linux-musl-gcc
 CCFLAGS    :=  -I${PWD}/obj/bsdtools/_install/include/ -I${BOOTSTRAP}/include -nostdinc
-BINTARGETS := obj/bsdtools/cat obj/bsdtools/echo obj/bsdtools/ls obj/bsdtools/sync obj/bsdtools/ln obj/bsdtools/mkdir
+BINTARGETS := obj/bsdtools/cat obj/bsdtools/echo obj/bsdtools/ls obj/bsdtools/sync obj/bsdtools/ln obj/bsdtools/mkdir obj/bsdtools/chmod
 
 libutil: lib/bsd_libutil/humanize_number.c lib/bsd_libutil/strmode.c lib/bsd_libutil/user_from_uid.c lib/bsd_libutil/setmode.c lib/bsd_libutil/libutil.h
 
@@ -40,7 +40,12 @@ obj/bsdtools/ls: bin/ls/util.c bin/ls/ls.c bin/ls/cmp.c  bin/ls/print.c libutil
 	${CC} ${CCFLAGS} obj/bsdtools/ls.build/util.o obj/bsdtools/ls.build/cmp.o obj/bsdtools/ls.build/humanize_number.o obj/bsdtools/ls.build/strmode.o obj/bsdtools/ls.build/user_from_uid.o obj/bsdtools/ls.build/print.o obj/bsdtools/ls.build/ls.o -o $@
 	rm -rf obj/bsdtools/ls.build
 
-obj/bsdtools/chmod:
+obj/bsdtools/chmod: bin/chmod/chmod.c libutil
+	mkdir obj/bsdtools/chmod.build
+	${CC} ${CCFLAGS} -c bin/chmod/chmod.c         -o obj/bsdtools/chmod.build/chmod.o
+	${CC} ${CCFLAGS} -c lib/bsd_libutil/setmode.c -o obj/bsdtools/chmod.build/setmode.o
+	${CC} ${CCFLAGS} obj/bsdtools/chmod.build/setmode.o obj/bsdtools/chmod.build/chmod.o -o obj/bsdtools/chmod
+	rm -rf obj/bsdtools/chmod.build
 
 obj/bsdtools/cp:
 
@@ -69,6 +74,7 @@ obj/bsdtools/pkill:
 obj/bsdtools/ps:
 
 obj/bsdtools/pwait:
+
 obj/bsdtools/realpath:
 
 obj/bsdtools/rm:
