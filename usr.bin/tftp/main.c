@@ -388,14 +388,14 @@ modecmd(int argc, char *argv[])
 }
 
 static void
-setbinary(int argc __unused, char *argv[] __unused)
+setbinary(int argc , char *argv[] )
 {
 
 	settftpmode("octet");
 }
 
 static void
-setascii(int argc __unused, char *argv[] __unused)
+setascii(int argc , char *argv[] )
 {
 
 	settftpmode("netascii");
@@ -645,7 +645,7 @@ settimeoutnetwork(int argc, char *argv[])
 }
 
 static void
-showstatus(int argc __unused, char *argv[] __unused)
+showstatus(int argc , char *argv[] )
 {
 
 	printf("Remote host: %s\n",
@@ -666,7 +666,7 @@ showstatus(int argc __unused, char *argv[] __unused)
 }
 
 static void
-intr(int dummy __unused)
+intr(int dummy )
 {
 
 	signal(SIGALRM, SIG_IGN);
@@ -818,7 +818,7 @@ makeargv(char *line)
 }
 
 static void
-quit(int argc __unused, char *argv[] __unused)
+quit(int argc , char *argv[] )
 {
 
 	exit(txrx_error);
@@ -856,7 +856,7 @@ help(int argc, char *argv[])
 }
 
 static void
-setverbose(int argc __unused, char *argv[] __unused)
+setverbose(int argc , char *argv[] )
 {
 
 	verbose = !verbose;

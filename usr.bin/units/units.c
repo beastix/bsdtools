@@ -100,7 +100,7 @@ static void	 zeroerror(void);
 
 static const char* promptstr = "";
 
-static const char * prompt(EditLine *e __unused) {
+static const char * prompt(EditLine *e ) {
 	return promptstr;
 }
 

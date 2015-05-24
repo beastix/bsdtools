@@ -56,6 +56,7 @@ static char sccsid[] = "@(#)jot.c	8.1 (Berkeley) 6/6/93";
 #include <string.h>
 #include <time.h>
 #include <unistd.h>
+#include <libutil.h>
 
 /* Defaults */
 #define	REPS_DEF	100

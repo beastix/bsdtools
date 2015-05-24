@@ -64,7 +64,7 @@ static time_t	f_time = 0;
 double		UTCOffset = UTCOFFSET_NOTSET;
 int		EastLongitude = LONGITUDE_NOTSET;
 
-static void	usage(void) __dead2;
+static void	usage(void);
 
 int
 main(int argc, char *argv[])
@@ -218,7 +218,7 @@ main(int argc, char *argv[])
 }
 
 
-static void __dead2
+static void
 usage(void)
 {
 

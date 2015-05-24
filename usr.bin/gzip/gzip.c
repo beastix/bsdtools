@@ -1188,7 +1188,7 @@ unlink_input(const char *file, const struct stat *sb)
 }
 
 static void
-sigint_handler(int signo __unused)
+sigint_handler(int signo )
 {
 
 	if (remove_file != NULL)

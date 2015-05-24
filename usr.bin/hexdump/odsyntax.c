@@ -306,7 +306,7 @@ odformat(const char *fmt)
 }
 
 static const char *
-odformatfp(char fchar __unused, const char *fmt)
+odformatfp(char fchar , const char *fmt)
 {
 	size_t isize;
 	int digits;

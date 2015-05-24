@@ -478,7 +478,7 @@ istail(char *str, char *of)
 }
 
 static void
-onintr(int dummy __unused)
+onintr(int dummy )
 {
 
 	ignore(signal(SIGINT, SIG_IGN));

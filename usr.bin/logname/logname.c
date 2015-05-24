@@ -46,7 +46,7 @@ static const char sccsid[] = "@(#)logname.c	8.2 (Berkeley) 4/3/94";
 void usage(void);
 
 int
-main(int argc, char *argv[] __unused)
+main(int argc, char *argv[])
 {
 	char *p;
 

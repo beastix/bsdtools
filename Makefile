@@ -3,6 +3,12 @@ BOOTSTRAP  := ${PWD}/../beastix/bootstrap/tools
 CC         := ${BOOTSTRAP}/bin/x86_64-unknown-linux-musl-gcc
 CCFLAGS    :=  -I${PWD}/obj/bsdtools/_install/include/ -I${BOOTSTRAP}/include -nostdinc
 
+LIBUTIL_OBJECTS :=  obj/bsdtools/bsd_libutil/humanize_number.o \
+                    obj/bsdtools/bsd_libutil/strmode.o \
+                    obj/bsdtools/bsd_libutil/user_from_uid.o \
+                    obj/bsdtools/bsd_libutil/setmode.o \
+                    obj/bsdtools/bsd_libutil/arc4random.o
+
 BINTARGETS := obj/bsdtools/bin/cat \
               obj/bsdtools/bin/cat \
               obj/bsdtools/bin/chmod \
@@ -21,13 +27,78 @@ BINTARGETS := obj/bsdtools/bin/cat \
               obj/bsdtools/bin/sleep \
               obj/bsdtools/bin/sync
 
-USRBINTARGETS := obj/bsdtools/usr.bin/banner \
+USRBINTARGETS := obj/bsdtools/usr.bin/asa \
+                 obj/bsdtools/usr.bin/banner \
+                 obj/bsdtools/usr.bin/basename \
                  obj/bsdtools/usr.bin/c89 \
                  obj/bsdtools/usr.bin/c99 \
-                 obj/bsdtools/usr.bin/true \
+                 obj/bsdtools/usr.bin/cksum \
+                 obj/bsdtools/usr.bin/colrm \
+                 obj/bsdtools/usr.bin/column \
+                 obj/bsdtools/usr.bin/comm \
+                 obj/bsdtools/usr.bin/dirname \
+                 obj/bsdtools/usr.bin/expand \
                  obj/bsdtools/usr.bin/false \
+                 obj/bsdtools/usr.bin/fold \
+                 obj/bsdtools/usr.bin/fsync \
+                 obj/bsdtools/usr.bin/getopt \
+                 obj/bsdtools/usr.bin/head \
+                 obj/bsdtools/usr.bin/jot \
+                 obj/bsdtools/usr.bin/lam \
+                 obj/bsdtools/usr.bin/logname \
+                 obj/bsdtools/usr.bin/look \
+                 obj/bsdtools/usr.bin/mkfifo \
+                 obj/bsdtools/usr.bin/mkstr \
+                 obj/bsdtools/usr.bin/ncal \
+                 obj/bsdtools/usr.bin/nice \
+                 obj/bsdtools/usr.bin/nl \
+                 obj/bsdtools/usr.bin/nohup \
+                 obj/bsdtools/usr.bin/paste \
+                 obj/bsdtools/usr.bin/patch \
+                 obj/bsdtools/usr.bin/pathchk \
+                 obj/bsdtools/usr.bin/perror \
+                 obj/bsdtools/usr.bin/printenv \
+                 obj/bsdtools/usr.bin/printf \
+                 obj/bsdtools/usr.bin/renice \
+                 obj/bsdtools/usr.bin/rev \
+                 obj/bsdtools/usr.bin/rs \
+                 obj/bsdtools/usr.bin/script \
+                 obj/bsdtools/usr.bin/sed \
+                 obj/bsdtools/usr.bin/seq \
+                 obj/bsdtools/usr.bin/shar \
+                 obj/bsdtools/usr.bin/sort \
+                 obj/bsdtools/usr.bin/split \
+                 obj/bsdtools/usr.bin/tail \
+                 obj/bsdtools/usr.bin/tar \
+                 obj/bsdtools/usr.bin/tee \
+                 obj/bsdtools/usr.bin/telnet \
+                 obj/bsdtools/usr.bin/tftp \
+                 obj/bsdtools/usr.bin/time \
+                 obj/bsdtools/usr.bin/timeout \
+                 obj/bsdtools/usr.bin/touch \
+                 obj/bsdtools/usr.bin/tr \
+                 obj/bsdtools/usr.bin/true \
+                 obj/bsdtools/usr.bin/truncate \
+                 obj/bsdtools/usr.bin/tsort \
+                 obj/bsdtools/usr.bin/tty \
+                 obj/bsdtools/usr.bin/unexpand \
+                 obj/bsdtools/usr.bin/unifdef \
+                 obj/bsdtools/usr.bin/uniq \
+                 obj/bsdtools/usr.bin/units \
+                 obj/bsdtools/usr.bin/unzip \
+                 obj/bsdtools/usr.bin/uudecode \
+                 obj/bsdtools/usr.bin/uuencode \
+                 obj/bsdtools/usr.bin/vgrind \
+                 obj/bsdtools/usr.bin/vmstat \
+                 obj/bsdtools/usr.bin/wc \
+                 obj/bsdtools/usr.bin/what \
                  obj/bsdtools/usr.bin/which \
+                 obj/bsdtools/usr.bin/whois \
+                 obj/bsdtools/usr.bin/xargs \
+                 obj/bsdtools/usr.bin/xinstall \
+                 obj/bsdtools/usr.bin/xstr \
                  obj/bsdtools/usr.bin/yes
+
 
 LIBTARGETS := obj/bsdtools/bsd_libutil/libutil.a
 
@@ -36,13 +107,14 @@ lib/bsd_libutil/%.c: lib/bsd_libutil/libutil.h
 obj/bsdtools/bsd_libutil/%.o: lib/bsd_libutil/%.c
 	${CC} ${CCFLAGS} -c $< -o $@
 
-obj/bsdtools/bsd_libutil/libutil.a: obj/bsdtools/bsd_libutil/humanize_number.o obj/bsdtools/bsd_libutil/strmode.o obj/bsdtools/bsd_libutil/user_from_uid.o obj/bsdtools/bsd_libutil/setmode.o
+
+obj/bsdtools/bsd_libutil/libutil.a: ${LIBUTIL_OBJECTS}
 	ar rcs $@ $^
 
 obj/bsdtools/bin/%: bin/%/*.c obj/bsdtools/bsd_libutil/libutil.a
 	${CC} ${CCFLAGS} $^ -o $@
 
-obj/bsdtools/usr.bin/%: usr.bin/%/*.c
+obj/bsdtools/usr.bin/%: usr.bin/%/*.c obj/bsdtools/bsd_libutil/libutil.a
 	${CC} ${CCFLAGS} $^ -o $@
 
 bsdheaders: include/

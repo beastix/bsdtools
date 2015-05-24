@@ -218,7 +218,7 @@ usage(void)
 }
 
 static void
-handlesig(int sig __unused)
+handlesig(int sig)
 {
 	const char msg[] = "csplit: caught signal, cleaning up\n";
 

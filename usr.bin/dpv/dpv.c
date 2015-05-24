@@ -476,7 +476,7 @@ main(int argc, char *argv[])
  * Interrupt handler to indicate we received a Ctrl-C interrupt.
  */
 static void
-sig_int(int sig __unused)
+sig_int(int sig )
 {
 	dpv_interrupt = TRUE;
 }

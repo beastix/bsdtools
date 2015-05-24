@@ -300,7 +300,7 @@ showtime(FILE *out, struct timeval *before, struct timeval *after,
 }
 
 static void
-siginfo(int sig __unused)
+siginfo(int sig )
 {
 
 	siginfo_recvd = 1;

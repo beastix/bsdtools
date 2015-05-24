@@ -995,8 +995,8 @@ install(const char *from_name, const char *to_name, u_long fset, u_int flags)
  *	compare two files; non-zero means files differ
  */
 static int
-compare(int from_fd, const char *from_name __unused, size_t from_len,
-	int to_fd, const char *to_name __unused, size_t to_len,
+compare(int from_fd, const char *from_name , size_t from_len,
+	int to_fd, const char *to_name , size_t to_len,
 	char **dresp)
 {
 	char *p, *q;

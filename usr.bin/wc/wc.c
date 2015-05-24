@@ -69,7 +69,7 @@ static int	cnt(const char *);
 static void	usage(void);
 
 static void
-siginfo_handler(int sig __unused)
+siginfo_handler(int sig )
 {
 
 	siginfo = 1;

@@ -880,7 +880,7 @@ printhdr(int maxid, u_long cpumask)
  * Force a header to be prepended to the next output.
  */
 static void
-needhdr(int dummy __unused)
+needhdr(int dummy )
 {
 
 	hdrcnt = 1;
