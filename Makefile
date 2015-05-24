@@ -42,6 +42,7 @@ USRBINTARGETS := obj/bsdtools/usr.bin/asa \
                  obj/bsdtools/usr.bin/column \
                  obj/bsdtools/usr.bin/comm \
                  obj/bsdtools/usr.bin/dirname \
+                 obj/bsdtools/usr.bin/env \
                  obj/bsdtools/usr.bin/expand \
                  obj/bsdtools/usr.bin/false \
                  obj/bsdtools/usr.bin/fold \

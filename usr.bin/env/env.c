@@ -10,7 +10,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -27,117 +27,63 @@
  * SUCH DAMAGE.
  */
 
-#ifndef lint
-static const char copyright[] =
-"@(#) Copyright (c) 1988, 1993, 1994\n\
-	The Regents of the University of California.  All rights reserved.\n";
-#endif /* not lint */
-
-#if 0
-#ifndef lint
-static char sccsid[] = "@(#)env.c	8.3 (Berkeley) 4/2/94";
-#endif /* not lint */
-#endif
-
 #include <sys/cdefs.h>
 
 #include <err.h>
-#include <errno.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <locale.h>
+#include <errno.h>
 
-#include "envopts.h"
+static void usage(void) __attribute__((__noreturn__));
 
 extern char **environ;
-
-int	 env_verbosity;
-
-static void usage(void);
 
 int
 main(int argc, char **argv)
 {
-	char *altpath, **ep, *p, **parg;
+	char **ep;
 	char *cleanenv[1];
-	int ch, want_clear;
-	int rtrn;
+	int ch;
 
-	altpath = NULL;
-	want_clear = 0;
-	while ((ch = getopt(argc, argv, "-iP:S:u:v")) != -1)
-		switch(ch) {
-		case '-':
+	(void)setlocale(LC_ALL, "");
+
+	while ((ch = getopt(argc, argv, "-i")) != -1)
+		switch((char)ch) {
+		case '-':			/* obsolete */
 		case 'i':
-			want_clear = 1;
-			break;
-		case 'P':
-			altpath = strdup(optarg);
-			break;
-		case 'S':
-			/*
-			 * The -S option, for "split string on spaces, with
-			 * support for some simple substitutions"...
-			 */
-			split_spaces(optarg, &optind, &argc, &argv);
-			break;
-		case 'u':
-			if (env_verbosity)
-				fprintf(stderr, "#env unset:\t%s\n", optarg);
-			rtrn = unsetenv(optarg);
-			if (rtrn == -1)
-				err(EXIT_FAILURE, "unsetenv %s", optarg);
-			break;
-		case 'v':
-			env_verbosity++;
-			if (env_verbosity > 1)
-				fprintf(stderr, "#env verbosity now at %d\n",
-				    env_verbosity);
+			environ = cleanenv;
+			cleanenv[0] = NULL;
 			break;
 		case '?':
 		default:
 			usage();
 		}
-	if (want_clear) {
-		environ = cleanenv;
-		cleanenv[0] = NULL;
-		if (env_verbosity)
-			fprintf(stderr, "#env clearing environ\n");
-	}
-	for (argv += optind; *argv && (p = strchr(*argv, '=')); ++argv) {
-		if (env_verbosity)
-			fprintf(stderr, "#env setenv:\t%s\n", *argv);
-		*p = '\0';
-		rtrn = setenv(*argv, p + 1, 1);
-		*p = '=';
-		if (rtrn == -1)
-			err(EXIT_FAILURE, "setenv %s", *argv);
-	}
+
+	for (argv += optind; *argv && strchr(*argv, '=') != NULL; ++argv)
+		(void)putenv(*argv);
+
 	if (*argv) {
-		if (altpath)
-			search_paths(altpath, argv);
-		if (env_verbosity) {
-			fprintf(stderr, "#env executing:\t%s\n", *argv);
-			for (parg = argv, argc = 0; *parg; parg++, argc++)
-				fprintf(stderr, "#env    arg[%d]=\t'%s'\n",
-				    argc, *parg);
-			if (env_verbosity > 1)
-				sleep(1);
-		}
-		execvp(*argv, argv);
-		err(errno == ENOENT ? 127 : 126, "%s", *argv);
+		/* return 127 if the command to be run could not be found; 126
+		   if the command was found but could not be invoked */
+
+		(void)execvp(*argv, argv);
+		err((errno == ENOENT) ? 127 : 126, "%s", *argv);
+		/* NOTREACHED */
 	}
+
 	for (ep = environ; *ep; ep++)
 		(void)printf("%s\n", *ep);
+
 	exit(0);
 }
 
 static void
 usage(void)
 {
-	(void)fprintf(stderr,
-	    "usage: env [-iv] [-P utilpath] [-S string] [-u name]\n"
-	    "           [name=value ...] [utility [argument ...]]\n");
+	(void)fprintf(stderr, "Usage: %s [-i] [name=value ...] [command]\n",
+	    getprogname());
 	exit(1);
 }
