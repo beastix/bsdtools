@@ -2,7 +2,6 @@ csh
 dd
 df
 kill
-mv
 pkill
 ps
 pwait

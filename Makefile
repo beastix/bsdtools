@@ -24,6 +24,7 @@ BINTARGETS := obj/bsdtools/bin/cat \
               obj/bsdtools/bin/ln \
               obj/bsdtools/bin/ls \
               obj/bsdtools/bin/mkdir \
+              obj/bsdtools/bin/mv \
               obj/bsdtools/bin/pwd \
               obj/bsdtools/bin/realpath \
               obj/bsdtools/bin/rm \
