@@ -8,7 +8,8 @@ LIBUTIL_OBJECTS :=  obj/bsdtools/bsd_libutil/humanize_number.o \
                     obj/bsdtools/bsd_libutil/user_from_uid.o \
                     obj/bsdtools/bsd_libutil/setmode.o \
                     obj/bsdtools/bsd_libutil/arc4random.o \
-                    obj/bsdtools/bsd_libutil/progname.o
+                    obj/bsdtools/bsd_libutil/progname.o \
+                    obj/bsdtools/bsd_libutil/expand_number.o
 
 BINTARGETS := obj/bsdtools/bin/cat \
               obj/bsdtools/bin/cat \
@@ -58,21 +59,8 @@ USRBINTARGETS := obj/bsdtools/usr.bin/asa \
                  obj/bsdtools/usr.bin/printf \
                  obj/bsdtools/usr.bin/renice \
                  obj/bsdtools/usr.bin/seq \
-                 obj/bsdtools/usr.bin/shar \
-                 obj/bsdtools/usr.bin/sort \
-                 obj/bsdtools/usr.bin/split \
-                 obj/bsdtools/usr.bin/tail \
-                 obj/bsdtools/usr.bin/tar \
-                 obj/bsdtools/usr.bin/tee \
-                 obj/bsdtools/usr.bin/telnet \
-                 obj/bsdtools/usr.bin/tftp \
-                 obj/bsdtools/usr.bin/time \
-                 obj/bsdtools/usr.bin/timeout \
-                 obj/bsdtools/usr.bin/touch \
-                 obj/bsdtools/usr.bin/tr \
                  obj/bsdtools/usr.bin/true \
                  obj/bsdtools/usr.bin/truncate \
-                 obj/bsdtools/usr.bin/tsort \
                  obj/bsdtools/usr.bin/tty \
                  obj/bsdtools/usr.bin/unexpand \
                  obj/bsdtools/usr.bin/unifdef \
