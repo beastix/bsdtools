@@ -11,7 +11,11 @@ BINTARGETS := obj/bsdtools/bin/cat \
               obj/bsdtools/bin/mkdir \
               obj/bsdtools/bin/chmod \
               obj/bsdtools/bin/cp \
-              obj/bsdtools/bin/rm
+              obj/bsdtools/bin/rm \
+              obj/bsdtools/bin/rmdir \
+              obj/bsdtools/bin/realpath \
+              obj/bsdtools/bin/pwd \
+              obj/bsdtools/bin/hostname
 
 LIBTARGETS := obj/bsdtools/bsd_libutil/libutil.a
 
