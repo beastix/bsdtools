@@ -26,6 +26,9 @@ obj/bsdtools/bsd_libutil/libutil.a: obj/bsdtools/bsd_libutil/humanize_number.o o
 obj/bsdtools/bin/%: bin/%/*.c obj/bsdtools/bsd_libutil/libutil.a
 	${CC} ${CCFLAGS} $^ -o $@
 
+obj/bsdtools/usr.bin/%: usr.bin/%/*.c
+	${CC} ${CCFLAGS} $^ -o $@
+
 bsdheaders: include/
 	cp -Rv include obj/bsdtools/_install/include
 	cp -Rv lib/bsd_libutil/*.h obj/bsdtools/_install/include/
