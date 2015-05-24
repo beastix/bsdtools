@@ -1,7 +1,7 @@
 PWD        != pwd
 BOOTSTRAP  := ${PWD}/../beastix/bootstrap/tools
 CC         := ${BOOTSTRAP}/bin/x86_64-unknown-linux-musl-gcc
-CCFLAGS    :=  -I${PWD}/obj/bsdtools/_install/include/ -I${BOOTSTRAP}/include -nostdinc
+CCFLAGS    := -I${PWD}/obj/bsdtools/_install/include/ -I${BOOTSTRAP}/include -nostdinc
 
 LIBUTIL_OBJECTS :=  obj/bsdtools/bsd_libutil/humanize_number.o \
                     obj/bsdtools/bsd_libutil/strmode.o \

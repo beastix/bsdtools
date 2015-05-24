@@ -76,7 +76,7 @@ main(int argc, char *argv[])
 	char path[MAXPATHLEN + 1];
 	size_t baselen;
 
-	setprogname(argv[0]);
+	//setprogname(argv[0]);
 	(void)setlocale(LC_ALL, "");
 
 	while ((ch = getopt(argc, argv, "ifv")) != -1)
