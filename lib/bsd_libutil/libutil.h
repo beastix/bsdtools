@@ -228,5 +228,6 @@ const char* group_from_gid(gid_t gid, int nogroup);
 
 mode_t getmode(const void *set, mode_t mode);
 void*  setmode(const char *mode_str);
+const char* getprogname();
 
 #endif /* !_LIBUTIL_H_ */

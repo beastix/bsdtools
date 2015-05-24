@@ -7,7 +7,8 @@ LIBUTIL_OBJECTS :=  obj/bsdtools/bsd_libutil/humanize_number.o \
                     obj/bsdtools/bsd_libutil/strmode.o \
                     obj/bsdtools/bsd_libutil/user_from_uid.o \
                     obj/bsdtools/bsd_libutil/setmode.o \
-                    obj/bsdtools/bsd_libutil/arc4random.o
+                    obj/bsdtools/bsd_libutil/arc4random.o \
+                    obj/bsdtools/bsd_libutil/progname.o
 
 BINTARGETS := obj/bsdtools/bin/cat \
               obj/bsdtools/bin/cat \
@@ -46,24 +47,16 @@ USRBINTARGETS := obj/bsdtools/usr.bin/asa \
                  obj/bsdtools/usr.bin/jot \
                  obj/bsdtools/usr.bin/lam \
                  obj/bsdtools/usr.bin/logname \
-                 obj/bsdtools/usr.bin/look \
                  obj/bsdtools/usr.bin/mkfifo \
                  obj/bsdtools/usr.bin/mkstr \
-                 obj/bsdtools/usr.bin/ncal \
                  obj/bsdtools/usr.bin/nice \
-                 obj/bsdtools/usr.bin/nl \
                  obj/bsdtools/usr.bin/nohup \
                  obj/bsdtools/usr.bin/paste \
-                 obj/bsdtools/usr.bin/patch \
                  obj/bsdtools/usr.bin/pathchk \
                  obj/bsdtools/usr.bin/perror \
                  obj/bsdtools/usr.bin/printenv \
                  obj/bsdtools/usr.bin/printf \
                  obj/bsdtools/usr.bin/renice \
-                 obj/bsdtools/usr.bin/rev \
-                 obj/bsdtools/usr.bin/rs \
-                 obj/bsdtools/usr.bin/script \
-                 obj/bsdtools/usr.bin/sed \
                  obj/bsdtools/usr.bin/seq \
                  obj/bsdtools/usr.bin/shar \
                  obj/bsdtools/usr.bin/sort \
