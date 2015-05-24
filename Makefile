@@ -9,12 +9,14 @@ LIBUTIL_OBJECTS :=  obj/bsdtools/bsd_libutil/humanize_number.o \
                     obj/bsdtools/bsd_libutil/setmode.o \
                     obj/bsdtools/bsd_libutil/arc4random.o \
                     obj/bsdtools/bsd_libutil/progname.o \
-                    obj/bsdtools/bsd_libutil/expand_number.o
+                    obj/bsdtools/bsd_libutil/expand_number.o \
+                    obj/bsdtools/bsd_libutil/parsedate.o
 
 BINTARGETS := obj/bsdtools/bin/cat \
               obj/bsdtools/bin/cat \
               obj/bsdtools/bin/chmod \
               obj/bsdtools/bin/cp \
+              obj/bsdtools/bin/date \
               obj/bsdtools/bin/domainname \
               obj/bsdtools/bin/echo \
               obj/bsdtools/bin/ed \
@@ -73,6 +75,9 @@ USRBINTARGETS := obj/bsdtools/usr.bin/asa \
 LIBTARGETS := obj/bsdtools/bsd_libutil/libutil.a
 
 lib/bsd_libutil/%.c: lib/bsd_libutil/libutil.h
+
+lib/bsd_libutil/parsedata.c: lib/bsd_libutil/parsedata.y
+	bison $^ -o $@
 
 obj/bsdtools/bsd_libutil/%.o: lib/bsd_libutil/%.c
 	${CC} ${CCFLAGS} -c $< -o $@

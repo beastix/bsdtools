@@ -230,6 +230,6 @@ mode_t getmode(const void *set, mode_t mode);
 void*  setmode(const char *mode_str);
 const char* getprogname();
 int expand_number(const char *buf, uint64_t *num);
-
+time_t parsedate(const char *p, const time_t *now, const int *zone);
 
 #endif /* !_LIBUTIL_H_ */

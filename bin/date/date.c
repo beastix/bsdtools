@@ -299,7 +299,6 @@ setthetime(const char *p)
 
 	/* set the time */
 //	if (nflag || netsettime(new_time)) {
-		logwtmp("|", "date", "");
 		if (aflag) {
 			tv.tv_sec = new_time - tval;
 			tv.tv_usec = 0;
@@ -312,7 +311,6 @@ setthetime(const char *p)
 			if (settimeofday(&tv, NULL))
 				err(EXIT_FAILURE, "settimeofday");
 		}
-		logwtmp("{", "date", "");
 //	}
 
 	if ((p = getlogin()) == NULL)
