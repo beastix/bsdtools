@@ -4,18 +4,22 @@ CC         := ${BOOTSTRAP}/bin/x86_64-unknown-linux-musl-gcc
 CCFLAGS    :=  -I${PWD}/obj/bsdtools/_install/include/ -I${BOOTSTRAP}/include -nostdinc
 
 BINTARGETS := obj/bsdtools/bin/cat \
-              obj/bsdtools/bin/echo \
-              obj/bsdtools/bin/ls \
-              obj/bsdtools/bin/sync \
-              obj/bsdtools/bin/ln \
-              obj/bsdtools/bin/mkdir \
+              obj/bsdtools/bin/cat \
               obj/bsdtools/bin/chmod \
               obj/bsdtools/bin/cp \
+              obj/bsdtools/bin/domainname \
+              obj/bsdtools/bin/echo \
+              obj/bsdtools/bin/ed \
+              obj/bsdtools/bin/hostname \
+              obj/bsdtools/bin/ln \
+              obj/bsdtools/bin/ls \
+              obj/bsdtools/bin/mkdir \
+              obj/bsdtools/bin/pwd \
+              obj/bsdtools/bin/realpath \
               obj/bsdtools/bin/rm \
               obj/bsdtools/bin/rmdir \
-              obj/bsdtools/bin/realpath \
-              obj/bsdtools/bin/pwd \
-              obj/bsdtools/bin/hostname
+              obj/bsdtools/bin/sleep \
+              obj/bsdtools/bin/sync
 
 USRBINTARGETS := obj/bsdtools/usr.bin/banner \
                  obj/bsdtools/usr.bin/c89 \

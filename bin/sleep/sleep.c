@@ -54,7 +54,7 @@ static void usage(void);
 
 static volatile sig_atomic_t report_requested;
 static void
-report_request(int signo __unused)
+report_request(int signo)
 {
 
 	report_requested = 1;
@@ -80,7 +80,6 @@ main(int argc, char *argv[])
 	original = time_to_sleep.tv_sec = (time_t)d;
 	time_to_sleep.tv_nsec = 1e9 * (d - time_to_sleep.tv_sec);
 
-	signal(SIGINFO, report_request);
 
 	/*
 	 * Note: [EINTR] is supposed to happen only when a signal was handled
