@@ -114,6 +114,7 @@ install-bsdtools: build-bsdtools
 	mkdir -p obj/bsdtools/_install/usr/bin
 	cp -v ${BINTARGETS} obj/bsdtools/_install/bin
 	cp -v ${USRBINTARGETS} obj/bsdtools/_install/usr/bin
+	rm -rf obj/bsdtools/_install/lib
 	mkdir obj/bsdtools/_install/lib
 	cp -v ${LIBTARGETS} obj/bsdtools/_install/lib
 
