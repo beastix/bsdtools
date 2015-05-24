@@ -29,7 +29,6 @@
 
 #include <sys/cdefs.h>
 
-__FBSDID("$FreeBSD$");
 
 #define	BUFSIZ	1024
 #define MAXHOP	32	/* max number of tc= indirections */
