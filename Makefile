@@ -64,19 +64,8 @@ USRBINTARGETS := obj/bsdtools/usr.bin/asa \
                  obj/bsdtools/usr.bin/tty \
                  obj/bsdtools/usr.bin/unexpand \
                  obj/bsdtools/usr.bin/unifdef \
-                 obj/bsdtools/usr.bin/uniq \
-                 obj/bsdtools/usr.bin/units \
-                 obj/bsdtools/usr.bin/unzip \
-                 obj/bsdtools/usr.bin/uudecode \
-                 obj/bsdtools/usr.bin/uuencode \
-                 obj/bsdtools/usr.bin/vgrind \
-                 obj/bsdtools/usr.bin/vmstat \
-                 obj/bsdtools/usr.bin/wc \
                  obj/bsdtools/usr.bin/what \
                  obj/bsdtools/usr.bin/which \
-                 obj/bsdtools/usr.bin/whois \
-                 obj/bsdtools/usr.bin/xargs \
-                 obj/bsdtools/usr.bin/xinstall \
                  obj/bsdtools/usr.bin/xstr \
                  obj/bsdtools/usr.bin/yes
 

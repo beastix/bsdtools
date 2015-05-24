@@ -24,11 +24,6 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifdef LIBBSD_OVERLAY
-#include_next <sys/poll.h>
-#else
-#include <sys/poll.h>
-#endif
 
 #ifndef LIBBSD_SYS_POLL_H
 #define LIBBSD_SYS_POLL_H
