@@ -17,6 +17,14 @@ BINTARGETS := obj/bsdtools/bin/cat \
               obj/bsdtools/bin/pwd \
               obj/bsdtools/bin/hostname
 
+USRBINTARGETS := obj/bsdtools/usr.bin/banner \
+                 obj/bsdtools/usr.bin/c89 \
+                 obj/bsdtools/usr.bin/c99 \
+                 obj/bsdtools/usr.bin/true \
+                 obj/bsdtools/usr.bin/false \
+                 obj/bsdtools/usr.bin/which \
+                 obj/bsdtools/usr.bin/yes
+
 LIBTARGETS := obj/bsdtools/bsd_libutil/libutil.a
 
 lib/bsd_libutil/%.c: lib/bsd_libutil/libutil.h
@@ -37,7 +45,7 @@ bsdheaders: include/
 	cp -Rv include obj/bsdtools/_install/include
 	cp -Rv lib/bsd_libutil/*.h obj/bsdtools/_install/include/
 
-build-bsdtools-binaries: bsdheaders ${BINTARGETS}
+build-bsdtools-binaries: bsdheaders ${BINTARGETS} ${USRBINTARGETS}
 
 build-bsdtools-libraries: ${LIBTARGETS}
 
@@ -46,11 +54,15 @@ build-bsdtools: build-bsdtools-binaries build-bsdtools-libraries
 clean-bsdtools-binaries:
 	rm -f ${BINTARGETS}
 	rm -f obj/bsdtools/_install/bin/*
+	rm -f obj/bsdtools/_install/usr/bin/*
 
 install-bsdtools: build-bsdtools
 	rm -rf obj/bsdtools/_install/bin
+	rm -rf obj/bsdtools/_install/usr/bin/
 	mkdir obj/bsdtools/_install/bin
+	mkdir -p obj/bsdtools/_install/usr/bin
 	cp -v ${BINTARGETS} obj/bsdtools/_install/bin
+	cp -v ${USRBINTARGETS} obj/bsdtools/_install/usr/bin
 	mkdir obj/bsdtools/_install/lib
 	cp -v ${LIBTARGETS} obj/bsdtools/_install/lib
 
