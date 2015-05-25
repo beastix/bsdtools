@@ -1,3 +1,5 @@
+.\"	$NetBSD: apply.1,v 1.12 2006/12/24 10:07:18 wiz Exp $
+.\"
 .\" Copyright (c) 1983, 1990, 1993
 .\"	The Regents of the University of California.  All rights reserved.
 .\"
@@ -9,7 +11,7 @@
 .\" 2. Redistributions in binary form must reproduce the above copyright
 .\"    notice, this list of conditions and the following disclaimer in the
 .\"    documentation and/or other materials provided with the distribution.
-.\" 4. Neither the name of the University nor the names of its contributors
+.\" 3. Neither the name of the University nor the names of its contributors
 .\"    may be used to endorse or promote products derived from this software
 .\"    without specific prior written permission.
 .\"
@@ -26,9 +28,8 @@
 .\" SUCH DAMAGE.
 .\"
 .\"     @(#)apply.1	8.2 (Berkeley) 4/4/94
-.\" $FreeBSD$
 .\"
-.Dd December 13, 2006
+.Dd April 4, 1994
 .Dt APPLY 1
 .Os
 .Sh NAME
@@ -36,14 +37,12 @@
 .Nd apply a command to a set of arguments
 .Sh SYNOPSIS
 .Nm
-.Op Fl a Ar c
-.Op Fl d
-.Op Fl #
+.Op Fl a Ns Ar c
+.Op Fl Ns Ar #
 .Ar command argument ...
 .Sh DESCRIPTION
-The
 .Nm
-utility runs the named
+runs the named
 .Ar command
 on each
 argument
@@ -55,7 +54,7 @@ Character sequences of the form
 in
 .Ar command ,
 where
-.Sq Li d
+.Dq Li d
 is a digit from 1 to 9, are replaced by the
 .Li d Ns \'th
 following unused
@@ -65,8 +64,8 @@ each execution of
 .Ar command .
 .Pp
 The options are as follows:
-.Bl -tag -width indent
-.It Fl #
+.Bl -tag -width "-ac"
+.It Fl Ns Ar #
 Normally arguments are taken singly; the optional number
 .Fl #
 specifies the number of arguments to be passed to
@@ -78,20 +77,15 @@ is run, without arguments, once for each
 .Pp
 If any sequences of
 .Dq Li \&%d
-occur in
-.Ar command ,
-the
+occur in command, the
 .Fl #
 option is ignored.
-.It Fl a Ar c
+.It Fl a Ns Ar c
 The use of the character
-.Sq Li %
+.Dq Li %
 as a magic character may be changed with the
 .Fl a
 option.
-.It Fl d
-Display the commands that would have been executed, but do not actually
-execute them.
 .El
 .Sh ENVIRONMENT
 The following environment variable affects the execution of
@@ -104,7 +98,7 @@ If this variable is not defined, the Bourne shell is used.
 .Sh FILES
 .Bl -tag -width /bin/sh -compact
 .It Pa /bin/sh
-default shell
+Default shell
 .El
 .Sh EXAMPLES
 .Bl -tag -width apply -compact
@@ -134,7 +128,3 @@ Shell metacharacters in
 may have bizarre effects; it is best to enclose complicated
 commands in single quotes
 .Pq '' .
-.Pp
-The
-.Nm
-utility does not recognize multibyte characters.
