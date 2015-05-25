@@ -33,6 +33,7 @@ BINTARGETS := obj/bsdtools/bin/cat \
               obj/bsdtools/bin/sync
 
 USRBINTARGETS := obj/bsdtools/usr.bin/asa \
+                 obj/bsdtools/usr.bin/apply \
                  obj/bsdtools/usr.bin/banner \
                  obj/bsdtools/usr.bin/basename \
                  obj/bsdtools/usr.bin/c89 \

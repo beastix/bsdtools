@@ -19,7 +19,6 @@
 
 #include <errno.h>
 #include <signal.h>
-#include <histedit.h>
 #include <termios.h>
 #include "extern.h"
 

@@ -31,7 +31,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #include <sys/wait.h>
@@ -40,7 +39,6 @@ __FBSDID("$FreeBSD$");
 #include <err.h>
 #include <errno.h>
 #include <getopt.h>
-#include <histedit.h>
 #include <limits.h>
 #include <search.h>
 #include <signal.h>
@@ -1089,7 +1087,7 @@ escape(const char *str)
 
 /* ARGSUSED */
 static void
-sigchld(int signo __unused)
+sigchld(int signo)
 {
 	pid_t pid;
 	int status, save_errno = errno;
