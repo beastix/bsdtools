@@ -71,6 +71,7 @@ USRBINTARGETS := obj/bsdtools/usr.bin/asa \
                  obj/bsdtools/usr.bin/fsync \
                  obj/bsdtools/usr.bin/getopt \
                  obj/bsdtools/usr.bin/head \
+                 obj/bsdtools/usr.bin/id \
                  obj/bsdtools/usr.bin/jot \
                  obj/bsdtools/usr.bin/lam \
                  obj/bsdtools/usr.bin/logname \

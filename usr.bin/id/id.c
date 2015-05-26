@@ -39,9 +39,9 @@ static char sccsid[] = "@(#)id.c	8.2 (Berkeley) 2/16/94";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
+#include <limits.h>
 
 #include <sys/param.h>
-#include <sys/mac.h>
 
 #ifdef USE_BSM_AUDIT
 #include <bsm/audit.h>
@@ -79,7 +79,7 @@ main(int argc, char *argv[])
 	int Aflag, cflag;
 	int error;
 	const char *myname;
-	char loginclass[MAXLOGNAME];
+	char loginclass[LOGIN_NAME_MAX];
 
 	Gflag = Mflag = Pflag = gflag = nflag = pflag = rflag = uflag = 0;
 	Aflag = cflag = 0;
@@ -165,13 +165,13 @@ main(int argc, char *argv[])
 	}
 #endif
 
-	if (cflag) {
+/*	if (cflag) {
 		error = getloginclass(loginclass, sizeof(loginclass));
 		if (error != 0)
 			err(1, "loginclass");
 		(void)printf("%s\n", loginclass);
 		exit(0);
-	}
+	}*/
 
 	if (gflag) {
 		id = pw ? pw->pw_gid : rflag ? getgid() : getegid();
@@ -226,7 +226,7 @@ static void
 pretty(struct passwd *pw)
 {
 	struct group *gr;
-	u_int eid, rid;
+	unsigned int eid, rid;
 	char *login;
 
 	if (pw) {
@@ -416,7 +416,7 @@ group(struct passwd *pw, int nflag)
 static void
 maclabel(void)
 {
-	char *string;
+/*	char *string;
 	mac_t label;
 	int error;
 
@@ -434,7 +434,7 @@ maclabel(void)
 
 	(void)printf("%s\n", string);
 	mac_free(label);
-	free(string);
+	free(string);*/
 }
 
 static struct passwd *
@@ -466,9 +466,9 @@ pline(struct passwd *pw)
 			err(1, "getpwuid");
 	}
 
-	(void)printf("%s:%s:%d:%d:%s:%ld:%ld:%s:%s:%s\n", pw->pw_name,
-			pw->pw_passwd, pw->pw_uid, pw->pw_gid, pw->pw_class,
-			(long)pw->pw_change, (long)pw->pw_expire, pw->pw_gecos,
+	(void)printf("%s:%s:%d:%d:%s:%s:%s\n", pw->pw_name,
+			pw->pw_passwd, pw->pw_uid, pw->pw_gid, 
+			pw->pw_gecos,
 			pw->pw_dir, pw->pw_shell);
 }
 
