@@ -127,8 +127,6 @@ tc1:	libedit.a tc1.o
 .include <bsd.subdir.mk>
 
 # XXX
-.if ${HAVE_GCC} >= 45
 COPTS.editline.c+=	-Wno-cast-qual
 COPTS.tokenizer.c+=	-Wno-cast-qual
 COPTS.tokenizern.c+=	-Wno-cast-qual
-.endif

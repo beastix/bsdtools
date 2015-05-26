@@ -186,12 +186,12 @@ public Char *ct_decode_string(const char *, ct_buffer_t *);
 
 /* Decode a (multi)?byte argv string array.
  * The pointer returned must be free()d when done. */
-protected Char **ct_decode_argv(int, const char *[],  ct_buffer_t *);
+ Char **ct_decode_argv(int, const char *[],  ct_buffer_t *);
 
 /* Resizes the conversion buffer(s) if needed. */
-protected void ct_conv_buff_resize(ct_buffer_t *, size_t, size_t);
-protected ssize_t ct_encode_char(char *, size_t, Char);
-protected size_t ct_enc_width(Char);
+ void ct_conv_buff_resize(ct_buffer_t *, size_t, size_t);
+ ssize_t ct_encode_char(char *, size_t, Char);
+ size_t ct_enc_width(Char);
 
 #define ct_free_argv(s)	el_free(s)
 
@@ -220,16 +220,16 @@ protected size_t ct_enc_width(Char);
 
 /* Visual width of character c, taking into account ^? , \0177 and \U+nnnnn
  * style visual expansions. */
-protected int ct_visual_width(Char);
+ int ct_visual_width(Char);
 
 /* Turn the given character into the appropriate visual format, matching
  * the width given by ct_visual_width(). Returns the number of characters used
  * up, or -1 if insufficient space. Buffer length is in count of Char's. */
-protected ssize_t ct_visual_char(Char *, size_t, Char);
+ ssize_t ct_visual_char(Char *, size_t, Char);
 
 /* Convert the given string into visual format, using the ct_visual_char()
  * function. Uses a static buffer, so not threadsafe. */
-protected const Char *ct_visual_string(const Char *);
+ const Char *ct_visual_string(const Char *);
 
 
 /* printable character, use ct_visual_width() to find out display width */
@@ -243,7 +243,7 @@ protected const Char *ct_visual_string(const Char *);
 /* non-printable character */
 #define CHTYPE_NONPRINT     (-4)
 /* classification of character c, as one of the above defines */
-protected int ct_chr_class(Char c);
+ int ct_chr_class(Char c);
 #endif
 
 

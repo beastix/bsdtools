@@ -228,11 +228,7 @@ fn_filename_completion_function(const char *text, int state)
 		/* otherwise, get first entry where first */
 		/* filename_len characters are equal	  */
 		if (entry->d_name[0] == filename[0]
-#if HAVE_STRUCT_DIRENT_D_NAMLEN
-		    && entry->d_namlen >= filename_len
-#else
 		    && strlen(entry->d_name) >= filename_len
-#endif
 		    && strncmp(entry->d_name, filename,
 			filename_len) == 0)
 			break;
@@ -240,11 +236,7 @@ fn_filename_completion_function(const char *text, int state)
 
 	if (entry) {		/* match found */
 
-#if HAVE_STRUCT_DIRENT_D_NAMLEN
-		len = entry->d_namlen;
-#else
 		len = strlen(entry->d_name);
-#endif
 
 		len = strlen(dirname) + len + 1;
 		temp = el_malloc(len * sizeof(*temp));

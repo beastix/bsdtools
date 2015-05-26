@@ -1,5 +1,7 @@
 # $FreeBSD$
 
-SUBDIR=	bsdiff bspatch
+PROG=	bsdiff
 
-.include <bsd.subdir.mk>
+LIBADD=	bz2
+
+.include <bsd.prog.mk>

@@ -12,6 +12,27 @@ LIBUTIL_OBJECTS :=  obj/bsdtools/bsd_libutil/humanize_number.o \
                     obj/bsdtools/bsd_libutil/expand_number.o \
                     obj/bsdtools/bsd_libutil/parsedate.o
 
+LIBEDIT_OBJECTS := obj/bsdtools/bsd_libedit/chared.o \
+                   obj/bsdtools/bsd_libedit/common.o \
+                   obj/bsdtools/bsd_libedit/el.o\
+                   obj/bsdtools/bsd_libedit/emacs.o\
+                   obj/bsdtools/bsd_libedit/fcns.o\
+                   obj/bsdtools/bsd_libedit/filecomplete.o\
+                   obj/bsdtools/bsd_libedit/help.o\
+                   obj/bsdtools/bsd_libedit/hist.o\
+                   obj/bsdtools/bsd_libedit/keymacro.o\
+                   obj/bsdtools/bsd_libedit/map.o\
+                   obj/bsdtools/bsd_libedit/chartype.o\
+                   obj/bsdtools/bsd_libedit/parse.o\
+                   obj/bsdtools/bsd_libedit/prompt.o\
+                   obj/bsdtools/bsd_libedit/read.o\
+                   obj/bsdtools/bsd_libedit/refresh.o\
+                   obj/bsdtools/bsd_libedit/search.o\
+                   obj/bsdtools/bsd_libedit/sig.o\
+                   obj/bsdtools/bsd_libedit/terminal.o\
+                   obj/bsdtools/bsd_libedit/tty.o\
+                   obj/bsdtools/bsd_libedit/vi.o
+ 
 BINTARGETS := obj/bsdtools/bin/cat \
               obj/bsdtools/bin/cat \
               obj/bsdtools/bin/chmod \
@@ -75,7 +96,8 @@ USRBINTARGETS := obj/bsdtools/usr.bin/asa \
                  obj/bsdtools/usr.bin/yes
 
 
-LIBTARGETS := obj/bsdtools/bsd_libutil/libutil.a
+LIBTARGETS := obj/bsdtools/bsd_libutil/libutil.a \
+              obj/bsdtools/bsd_libedit/libedit.a
 
 lib/bsd_libutil/%.c: lib/bsd_libutil/libutil.h
 
@@ -85,19 +107,25 @@ lib/bsd_libutil/parsedata.c: lib/bsd_libutil/parsedata.y
 obj/bsdtools/bsd_libutil/%.o: lib/bsd_libutil/%.c
 	${CC} ${CCFLAGS} -c $< -o $@
 
+obj/bsdtools/bsd_libedit/%.o: lib/bsd_libedit/%.c
+	${CC} ${CCFLAGS} -I{PWD}/lib/bsd_libedit/ -c $< -o $@
 
 obj/bsdtools/bsd_libutil/libutil.a: ${LIBUTIL_OBJECTS}
 	ar rcs $@ $^
 
-obj/bsdtools/bin/%: bin/%/*.c obj/bsdtools/bsd_libutil/libutil.a
+obj/bsdtools/bsd_libedit/libedit.a: ${LIBEDIT_OBJECTS}
+	ar rcs $@ $^
+
+obj/bsdtools/bin/%: bin/%/*.c ${LIBTARGETS}
 	${CC} ${CCFLAGS} $^ -o $@
 
-obj/bsdtools/usr.bin/%: usr.bin/%/*.c obj/bsdtools/bsd_libutil/libutil.a
+obj/bsdtools/usr.bin/%: usr.bin/%/*.c ${LIBTARGETS}
 	${CC} ${CCFLAGS} $^ -o $@
 
 bsdheaders: include/
 	cp -Rv include obj/bsdtools/_install/include
 	cp -Rv lib/bsd_libutil/*.h obj/bsdtools/_install/include/
+	cp -Rv lib/bsd_libedit/*.h obj/bsdtools/_install/include/
 
 build-bsdtools-binaries: bsdheaders ${BINTARGETS} ${USRBINTARGETS}
 

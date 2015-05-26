@@ -52,19 +52,8 @@ __RCSID("$NetBSD: terminal.c,v 1.12 2011/11/18 20:32:00 christos Exp $");
 #include <stdlib.h>
 #include <unistd.h>
 #include <limits.h>
-#ifdef HAVE_TERMCAP_H
-#include <termcap.h>
-#endif
-#ifdef HAVE_CURSES_H
-#include <curses.h>
-#elif HAVE_NCURSES_H
-#include <ncurses.h>
-#endif
 
 /* Solaris's term.h does horrid things. */
-#if defined(HAVE_TERM_H) && !defined(__sun)
-#include <term.h>
-#endif
  
 #include <sys/types.h>
 #include <sys/ioctl.h>
