@@ -29,7 +29,6 @@ patch
 rev
 rs
 script
-sed
 sort
 split
 tail
