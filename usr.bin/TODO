@@ -1,5 +1,6 @@
 bc
 bsdiff
+bspatch
 bzip2
 bzip2recover
 calendar
@@ -18,7 +19,6 @@ fmt
 grep
 gzip
 hexdump
-id
 indent
 join
 killall

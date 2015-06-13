@@ -85,6 +85,7 @@ USRBINTARGETS := obj/bsdtools/usr.bin/asa \
                  obj/bsdtools/usr.bin/printenv \
                  obj/bsdtools/usr.bin/printf \
                  obj/bsdtools/usr.bin/renice \
+                 obj/bsdtools/usr.bin/sed \
                  obj/bsdtools/usr.bin/seq \
                  obj/bsdtools/usr.bin/true \
                  obj/bsdtools/usr.bin/truncate \
@@ -102,7 +103,7 @@ LIBTARGETS := obj/bsdtools/bsd_libutil/libutil.a \
 
 lib/bsd_libutil/%.c: lib/bsd_libutil/libutil.h
 
-lib/bsd_libutil/parsedata.c: lib/bsd_libutil/parsedata.y
+lib/bsd_libutil/parsedate.c: lib/bsd_libutil/parsedate.y
 	bison $^ -o $@
 
 obj/bsdtools/bsd_libutil/%.o: lib/bsd_libutil/%.c
