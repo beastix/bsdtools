@@ -231,5 +231,6 @@ void*  setmode(const char *mode_str);
 const char* getprogname();
 int expand_number(const char *buf, uint64_t *num);
 time_t parsedate(const char *p, const time_t *now, const int *zone);
+#define DEFFILEMODE 0666
 
 #endif /* !_LIBUTIL_H_ */

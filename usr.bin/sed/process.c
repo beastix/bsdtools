@@ -32,6 +32,13 @@
  */
 
 #include <sys/cdefs.h>
+#include <libutil.h>
+
+#include <regex.h>
+#ifndef REG_STARTEND
+#define REG_STARTEND REG_NEWLINE
+#endif
+
 
 #ifndef lint
 static const char sccsid[] = "@(#)process.c	8.6 (Berkeley) 4/20/94";
